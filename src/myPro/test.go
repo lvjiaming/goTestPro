@@ -2,6 +2,7 @@ package main // 所属包（main包且含有main为命令源码文件）
 
 import (
 	"container/list"
+	"encoding/json"
 	"fmt"
 	"image"
 	"image/color"
@@ -28,6 +29,8 @@ func main()  {
 	//binaryFindTest()
 	//chainTest()
 	interfaceInfo()
+	//jsonTestFunc()
+	//testListFunc()
 }
 
 
@@ -365,7 +368,7 @@ func testPanicRecover()  {
 	fmt.Println("程序正常运行")
 	panicDealWithFunc(func() {
 		fmt.Println("手动宕机前")
-		panic(&panicFuncErrorInfo{"手动引起宕机"})
+		panic((&panicFuncErrorInfo{"手动引起宕机"}).info) // 通过取地址实例化panicFuncErrorInfo结构体
 	})
 	panicDealWithFunc(func() {
 		fmt.Println("赋值前")
@@ -385,6 +388,99 @@ func testXn()  {
 		sum++
 	}
 	fmt.Println("用时：", time.Since(start))
+}
+
+/**
+ type自定义类型，可以给任意类型添加方法
+ */
+type myInt int
+
+func (p *myInt) IsZeo () bool { // 指针类型接收器
+	return *p == 0
+}
+func (p myInt) Add (value int) int { // 非指针类型接收器
+	return int(p) + value
+}
+func testTypeFunc(value myInt)  {
+	var a myInt
+	fmt.Println(a.IsZeo())
+	a = value
+	fmt.Println(a.IsZeo())
+	fmt.Println(a.Add(10))
+}
+/**
+ 结构体
+ */
+type structOne struct {
+	a, b int
+}
+type structTwo struct {
+	structOne// 内嵌结构体，字段名就是类型名(内嵌结构体可用于实现继承关系)
+	c int
+}
+type structThree struct {
+	structOne
+	a struct{  // 匿名内嵌结构体
+		b int
+		c string
+	}
+}
+
+func testStructFunc()  {
+	a := &structTwo{structOne{1, 2}, 3}
+	fmt.Println(a)
+	fmt.Println(a.a, a.b, a.c)
+	fmt.Println(a.structOne.a, a.structOne.b, a.c)
+	b := &structThree{ // 初始化内嵌结构体
+		structOne: structOne{a: 1, b: 2},
+		a: struct {
+			b int
+			c string
+		}{b: 1, c: "111"},
+	}
+	fmt.Println(b)
+	fmt.Println(b.a.b, b.structOne.a, b.structOne.b, b.a, b.a.c)
+}
+/**
+接口
+ */
+type Server struct {
+	Start func()
+	Log func(interface{})
+}
+type LogServer struct {
+
+}
+
+func (l *LogServer) Log (s interface{})  {
+	fmt.Println(s)
+}
+
+type GameServer struct { // 此结构体内嵌了LogServer结构体
+	LogServer
+}
+
+func (g *GameServer) Start ()  {
+	fmt.Println("开始游戏")
+}
+func interfaceTestFunc()  {
+	a := new(GameServer)
+	a.Log("哈哈")
+	a.Start()
+}
+/**
+ 断言（i.(T): i为断言值，T为断言类型）
+ */
+func testDuanYan()  {
+	var a interface{} = 10
+	n, ok := a.(int) // 返回两个值。类似类型强转（第一个值未转换后的值，后一个值转换结果）
+	fmt.Println(n, ok)
+	m, result := a.(float64)
+	fmt.Println(m, result)
+	f, result := a.(string)
+	fmt.Println(f, result)
+	//f := a.(float64) // 此时断言未成功，切结果未呈现，会产生恐慌
+	//fmt.Println(f)
 }
 
 func interfaceInfo()  {
@@ -411,5 +507,177 @@ func interfaceInfo()  {
 	//panicFunc()
 	testPanicRecover()
 	testXn()
+	testTypeFunc(1)
+	testStructFunc()
+	interfaceTestFunc()
+	testDuanYan()
+	changeString("abcdef")
+}
+
+
+/**
+ 用于测试用例的函数
+ */
+func GetArea(weight int, height int) int {
+	return weight * height
 }
 /***************************函数，接口，与结构体******************************/
+
+/***************************实例******************************/
+
+/**
+利用结构体解析json数据
+*/
+type Screens struct {
+	Size       float32 // 屏幕尺寸
+	ResX, ResY int     // 屏幕水平和垂直分辨率
+}
+type Battery struct {
+	Capacity int
+}
+
+func getJsonData() []byte {
+	raw := &struct {
+		Screens
+		Battery
+		HasTouchID bool
+	}{
+		Screens: Screens{ // 注意：此时字段名如果是小写，则初始化不成功
+			Size: 5.5,
+			ResX: 1920,
+			ResY: 1080,
+		},
+		Battery: Battery{
+			20,
+		},
+		HasTouchID: true,
+	}
+	jsonData, _ := json.Marshal(raw)
+	fmt.Println(string(jsonData))
+	return jsonData
+}
+func jsonTestFunc()  {
+	jsonData := getJsonData()
+	screnc := struct {
+		Screens
+		HasTouchID bool
+	}{}
+	json.Unmarshal(jsonData, &screnc) // 筛选json数据
+	fmt.Println(screnc)
+	battery := struct {
+		Battery
+		HasTouchID bool
+	}{}
+	json.Unmarshal(jsonData, &battery)
+	fmt.Println(battery)
+}
+
+/**
+ 使用结构体实现单链表
+ */
+type Student struct {
+	Name string
+	Id int
+}
+type Node struct {
+	Student
+	Next *Node // 存放下一个Node的地址
+}
+
+func (head *Node) Creat () *Node {
+	head = nil
+	return head
+}
+func (p *Node)PrintLink()  {
+	for p != nil {
+		fmt.Println(p.Name, p.Id)
+		p = p.Next
+	}
+}
+func (newNode *Node) Insert (head *Node) *Node {
+	if head == nil {
+		fmt.Println("11")
+		head = newNode
+		head.Next = nil
+	} else {
+		headTem := head
+		var lastHead *Node
+		for headTem.Next != nil && headTem.Id < newNode.Id {
+			lastHead = headTem
+			headTem = headTem.Next
+		}
+		if headTem.Id >= newNode.Id {
+			if lastHead == nil { // 此时元素只有一个
+				head = newNode
+				head.Next = headTem
+				headTem.Next = nil
+			} else {
+				lastHead.Next = newNode
+				newNode.Next = headTem
+			}
+		} else {
+			headTem.Next = newNode
+			newNode.Next = nil
+		}
+	}
+	return head
+}
+func (head *Node) Delete (delNode *Node) *Node {
+	headTem := head
+	var lastHead *Node
+	for headTem.Next != nil {
+		if headTem.Id == delNode.Id && headTem.Name == delNode.Name {
+			if lastHead == nil {
+				head = head.Next
+			} else {
+				lastHead.Next = headTem.Next
+			}
+			goto onEnd
+		}
+		lastHead = headTem
+		headTem = headTem.Next
+	}
+	if headTem.Next == nil {
+		if headTem.Id == delNode.Id && headTem.Name == delNode.Name {
+			if lastHead != nil {
+				lastHead.Next = nil
+			}
+		}
+	}
+	onEnd:
+		return head
+}
+func testListFunc()  {
+	var newStudentList *Node
+	sut1 := Node{Student{Name: "lihua", Id: 1001}, nil}
+	sut2 := Node{Student{Name: "lili", Id: 1002}, nil}
+	sut3 := Node{Student{Name: "haha", Id: 1003}, nil}
+	sut4 := Node{Student{Name: "haha2", Id: 1006}, nil}
+	sut5 := Node{Student{Name: "haha2", Id: 1004}, nil}
+	newStudentList = newStudentList.Creat()
+	newStudentList = sut3.Insert(newStudentList)
+	newStudentList = sut1.Insert(newStudentList)
+	newStudentList = sut4.Insert(newStudentList)
+	newStudentList = sut2.Insert(newStudentList)
+	newStudentList = sut5.Insert(newStudentList)
+	newStudentList.PrintLink()
+	fmt.Println("删除后")
+	newStudentList = newStudentList.Delete(&sut2)
+	newStudentList.PrintLink()
+}
+
+/*
+讲一个字符串倒着输出
+ */
+func changeString(str string) string {
+	var sArr [] string
+	for _, value := range str{
+		sArr = append([] string{string(value)}, sArr[:]...)
+	}
+	newStr := ""
+	for _, value := range sArr{
+		newStr = newStr + value
+	}
+	fmt.Println(newStr)
+	return newStr
+}
