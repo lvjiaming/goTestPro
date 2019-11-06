@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11661e92-7bf8-40a4-a608-3ae6e95d7b72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MyDictionary/MyDictionary.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SimpleMediaPlayer/DealWith.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SimpleMediaPlayer/MusicPlayer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SimpleMediaPlayer/Player.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestWebServer/WebServer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customLog/autoLog.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo_test.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />

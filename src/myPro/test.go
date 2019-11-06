@@ -8,8 +8,13 @@ import (
 	"image/color"
 	"image/png"
 	"log"
+	"myPro/MyDictionary"
+	"myPro/SimpleMediaPlayer"
+	"myPro/TestWebServer"
+	"myPro/customLog"
 	"os"
 	"runtime"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -28,9 +33,15 @@ func main()  {
 	//sentenceInfo()
 	//binaryFindTest()
 	//chainTest()
-	interfaceInfo()
+	//interfaceInfo()
 	//jsonTestFunc()
 	//testListFunc()
+	//testLogFunc()
+	//testSortFunc()
+	//DictionaryFunc()
+	//typeSwitchTestFunc()
+	//webServerFunc()
+	musicPlayerFunc()
 }
 
 
@@ -297,7 +308,7 @@ func (p testFunc) twoFunc (a interface{}) {
  可变参数
  */
 func myPrint(args ...interface{})  {
-	for _, value := range args{
+	for _, value := range args{ // 类型断言
 		switch value.(type) {
 		case int:
 			fmt.Println(value, "is int value")
@@ -479,7 +490,7 @@ func testDuanYan()  {
 	fmt.Println(m, result)
 	f, result := a.(string)
 	fmt.Println(f, result)
-	//f := a.(float64) // 此时断言未成功，切结果未呈现，会产生恐慌
+	//f := a.(float64) // 此时断言未成功，且结果未呈现，会产生恐慌(即错误)
 	//fmt.Println(f)
 }
 
@@ -680,4 +691,217 @@ func changeString(str string) string {
 	}
 	fmt.Println(newStr)
 	return newStr
+}
+
+/**
+ 日志写入器
+ */
+func testLogFunc()  {
+	logWriter := customLog.NewLogger()
+	fWriter := customLog.NewFileWriter()
+	consoleWrite := customLog.NewConsoleWriter()
+	err := fWriter.SetFile("log")
+	if err == nil {
+		logWriter.RegisterWriter(fWriter)
+	}
+	logWriter.RegisterWriter(consoleWrite)
+	logWriter.Log("测试一哈哈")
+}
+
+/**
+ 排序（内置sort方法，需要实现sort接口的三个方法： Len() int，Less(i, j int) bool， Swap(i, j int)）
+ */
+type myString []string
+
+func (m myString) Len () int { // 获取长度的方法
+	return len(m)
+}
+
+func (m myString) Less (i, j int) bool { // 比较的方法
+	return m[i] < m[j]
+}
+
+func (m myString)Swap(i, j int)  { // 交换的方法
+	m[i], m[j] = m[j], m[i]
+}
+
+// 排序结构体
+type StudentInfo struct {
+	Id int
+	Name string
+}
+
+type StudentList []*StudentInfo
+
+func (s StudentList) Len () int {
+	return len(s)
+}
+func (s StudentList) Less (i, j int) bool {
+	return s[i].Id < s[j].Id
+}
+func (s StudentList)Swap(i, j int)  {
+	s[i], s[j] = s[j], s[i]
+}
+
+func testSortFunc()  {
+	strList := myString{
+		"123",
+		"234",
+		"abc",
+		"1",
+		"2",
+	}
+	sort.Sort(strList) // 内置接口已实现，可以用内置sort方法了
+	for _, v := range strList{
+		fmt.Println(v)
+	}
+	// 可用内置的排序函数
+	strList2 := []string{
+		"1",
+		"2",
+		"5",
+		"3",
+	}
+	sort.Strings(strList2) // 字符串排序（sort.Ints(a []int) 整型排序, sort.Float64s(a []Float64) 浮点数排序）
+	for _, v := range strList2{
+		fmt.Println(v)
+	}
+
+	stduentList := StudentList{
+		&StudentInfo{
+			Id:   123,
+			Name: "user1",
+		},
+		&StudentInfo{
+			Id:   128,
+			Name: "user2",
+		},
+		&StudentInfo{
+			Id:   124,
+			Name: "user3",
+		},
+		&StudentInfo{
+			Id:   125,
+			Name: "user4",
+		},
+	}
+	sort.Sort(stduentList) // 结构体
+	for _, v := range stduentList{
+		fmt.Printf("%v", v)
+	}
+	sort.Slice(stduentList, func(i, j int) bool { // 1.8以上才支持，直接对切片排序，传入比较函数
+		return stduentList[i].Id > stduentList[j].Id
+	})
+	for _, v := range stduentList{
+		fmt.Printf("%v", v)
+	}
+}
+
+/**
+ 利用空接口实现字典
+ */
+func DictionaryFunc()  {
+	dic := MyDictionary.NewDictionary()
+	dic.Set("one", 123)
+	dic.Set(2, "two")
+	dic.Set(2, "three")
+	dic.Set(3, "three")
+	dic.Set("3", "four")
+	fmt.Println("获取值：", dic.Get("3"))
+	dic.Visit(func(i, j interface{}) bool {
+		fmt.Println(i, j)
+		return true
+	})
+}
+
+/**
+ 利用类型断言type-switch
+ */
+type Walker interface {
+	Walk()
+}
+type Flyer interface {
+	Fly()
+}
+type Human struct {
+	
+}
+func (h *Human) Walk ()  {
+	fmt.Println("行走")
+}
+type Bird struct {
+
+}
+
+func (b *Bird) Fly ()  {
+	fmt.Println("飞行")
+}
+
+func checkTypeFunc(data interface{})  {
+	switch data.(type) { // data必须为interface类型
+	case Walker:
+		fmt.Println("这是行走类")
+	case Flyer:
+		fmt.Println("这是飞行类的")
+	}
+}
+
+func typeSwitchTestFunc()  {
+	var human interface{}
+	human = new(Human)
+	checkTypeFunc(human)
+	bird := new(Bird)
+	checkTypeFunc(bird)
+
+	// 错误的类型
+	_, err := os.Open("test")
+	fmt.Println(err.(*os.PathError).Err)
+	fmt.Println(os.IsExist(err)) // 文件已存储
+	fmt.Println(os.IsNotExist(err)) // 文件未找到
+	fmt.Println(os.IsPermission(err)) // 没有权限
+
+	//var a interface{}
+	////var b *Aaa
+	//a = &Aaa{}
+	//fmt.Println("11",a.(*Aaa))
+}
+
+//type Aaa struct {
+//	a int
+//}
+
+/**
+ 迷你的web服务器
+ */
+func webServerFunc()  {
+	TestWebServer.TWSHandlerFunc()
+}
+/*
+音乐播放器
+ */
+func musicPlayerFunc()  {
+	musicManager := SimpleMediaPlayer.NewMusicManager()
+	fmt.Println(musicManager)
+	music1 := &SimpleMediaPlayer.Music{
+		Name:   "music1",
+		Artist: "artist1",
+		Source: "/music",
+		Type:   "mp3",
+	}
+	music2 := &SimpleMediaPlayer.Music{
+		Name:   "music2",
+		Artist: "artist2",
+		Source: "/music",
+		Type:   "mp3",
+	}
+	musicManager.Add(music1)
+	musicManager.Add(music2)
+	fmt.Println(musicManager)
+	fmt.Println(musicManager.Get("music1"))
+	fmt.Println(musicManager.Len())
+	fmt.Println(musicManager.Remove("music1"))
+	fmt.Println(musicManager)
+
+	SimpleMediaPlayer.MusicPlay()
+
 }
