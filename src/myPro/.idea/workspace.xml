@@ -2,26 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11661e92-7bf8-40a4-a608-3ae6e95d7b72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../chatClient/ChatClient.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BinaryTree/BinaryTree.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatServer/ChatClient.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ChatServer/ChatServer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CustomerSystem/Model/Customer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CustomerSystem/Server/CustomerServer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CustomerSystem/View/CustomerView.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DesignPattern/Factory/Class1.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DesignPattern/Factory/Factory.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EncodeAndDecode/EncodeAndDecode.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ExampleCollection/ExampleCollection.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FiniteStateMachine/CustomState.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FiniteStateMachine/State.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/FiniteStateMachine/StateManager.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Telent/TelentServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../bin/go_build_myPro.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../bin/go_build_myPro.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SimpleMediaPlayer/DealWith.go" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleMediaPlayer/DealWith.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestWebServer/WebServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/TestWebServer/WebServer.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
