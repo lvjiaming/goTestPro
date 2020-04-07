@@ -19,7 +19,7 @@ func TWSHandlerFunc()  {
 	http.HandleFunc("/test", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Fprintf(writer, "%s", request.URL) // 将后面内容写入writer里
 	})
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+	log.Fatal(http.ListenAndServe(":3030", nil))
 }
 /**
  w 是回复的消息，r是请求
@@ -47,4 +47,20 @@ func countHandler(w http.ResponseWriter, r *http.Request)  {
 	mu.Lock()
 	fmt.Fprintf(w, "count: %d", count)
 	mu.Unlock()
+}
+
+// 加密的http服务，即https（ECHO）
+
+func HttpsServer()  {
+	//go run $GOROOT/src/crypto/tls/generate_cert.go --host localhost(cert.pem, key.pem两个文件的生成)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/plain")
+		w.Header().Set("Content-Length", fmt.Sprint(len("C语言中文网")))
+		w.Write([]byte("C语言中文网"))
+	})
+	log.Fatal( http.ListenAndServeTLS(":8080", "cert.pem", "key.pem", nil))
+}
+
+func EchoServer()  {
+
 }

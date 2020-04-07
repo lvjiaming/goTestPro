@@ -2,14 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11661e92-7bf8-40a4-a608-3ae6e95d7b72" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/MyDictionary/MyDictionary.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SimpleMediaPlayer/DealWith.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SimpleMediaPlayer/MusicPlayer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SimpleMediaPlayer/Player.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TestWebServer/WebServer.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customLog/autoLog.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../chatClient/ChatClient.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BinaryTree/BinaryTree.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatServer/ChatClient.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ChatServer/ChatServer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CustomerSystem/Model/Customer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CustomerSystem/Server/CustomerServer.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CustomerSystem/View/CustomerView.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DesignPattern/Factory/Class1.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DesignPattern/Factory/Factory.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/EncodeAndDecode/EncodeAndDecode.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ExampleCollection/ExampleCollection.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FiniteStateMachine/CustomState.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FiniteStateMachine/State.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/FiniteStateMachine/StateManager.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Telent/TelentServer.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../bin/go_build_myPro.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../../bin/go_build_myPro.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo_test.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SimpleMediaPlayer/DealWith.go" beforeDir="false" afterPath="$PROJECT_DIR$/SimpleMediaPlayer/DealWith.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestWebServer/WebServer.go" beforeDir="false" afterPath="$PROJECT_DIR$/TestWebServer/WebServer.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/test.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,6 +28,20 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -41,7 +66,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoLibrariesConfigurableProvider" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -61,7 +86,17 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Build.go build test.go">
+  <component name="RunManager" selected="Go Build.go build myPro">
+    <configuration name="chatServer" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="myPro" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <go_parameters value="-i" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/|$PROJECT_DIR$/ChatServer/ChatServer.go" />
+      <package value="myPro" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build myPro" type="GoApplicationRunConfiguration" factoryName="Go Application" nameIsGenerated="true">
       <module name="myPro" />
       <working_directory value="$PROJECT_DIR$/../.." />
@@ -94,6 +129,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Go Build.chatServer" />
       <item itemvalue="Go Build.go build myPro" />
       <item itemvalue="Go Build.go build test.go" />
       <item itemvalue="Go Test.go test myPro" />

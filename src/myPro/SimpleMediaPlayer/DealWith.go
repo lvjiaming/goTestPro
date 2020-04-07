@@ -57,8 +57,8 @@ func playCommand(command []string)  {
 func MusicPlay()  {
 	fmt.Println(`
         Enter following commands to control the player:
-        music add <name><artist><source><type> -- Add a music to the music lib
-        music remove <name> -- Remove the specified music from the lib
+        music Add <name><artist><source><type> -- Add a music to the music lib
+        music Remove <name> -- Remove the specified music from the lib
         play <name> -- Play the specified music
     `)
 	musicManager = NewMusicManager()
